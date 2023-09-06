@@ -91,6 +91,8 @@ function Menu() {
 
 function Pizza(props) {
   // console.log(props);
+
+  if (props.pizzaObj.soldOut) return null;
   return (
     <li className="pizza">
       <img src={props.pizzaObj.photoName} alt={props.pizzaObj.name} />
@@ -108,19 +110,19 @@ function Footer() {
   const openHour = 12;
   const closeHour = 22;
   const isOpen = hour >= openHour && hour <= closeHour;
-  // console.log(isOpen);
-  //   if ((hour) => openHour && hour <= closeHour) alert("We are currently open.");
-  //   else alert("We are closed.");
-  // console.log(hour);
+
+  // if (!isOpen) return <p>CLOSED!</p>;
+
   return (
     <footer className="footer">
       {isOpen ? (
-        <div className="order">
-          <p>We are open until {closeHour}:00. Come visit or order online.</p>
-          <p>{new Date().toLocaleTimeString()} "We are currently open."</p>
-          <button className="btn">Order</button>
-        </div>
+        <Order closeHour={closeHour} />
       ) : (
+        // <div className="order">
+        //   <p>We are open until {closeHour}:00. Come visit or order online.</p>
+        //   <p>{new Date().toLocaleTimeString()} "We are currently open."</p>
+        //   <button className="btn">Order</button>
+        // </div>
         <p>
           We're happy to welcome you between {openHour}:00 and {closeHour}:00
         </p>
@@ -128,6 +130,16 @@ function Footer() {
     </footer>
   );
   //   return React.createElement("footer", null, "We are currently open.");
+}
+
+function Order(props) {
+  return (
+    <div className="order">
+      <p>We are open until {props.closeHour}:00. Come visit or order online.</p>
+      <p>{new Date().toLocaleTimeString()} "We are currently open."</p>
+      <button className="btn">Order</button>
+    </div>
+  );
 }
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
